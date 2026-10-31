@@ -906,7 +906,7 @@ const pizzaAmigustoApp = {
         limit: 4,
         selected: [],
         currentSizeName: '',
-        currentPrice: 18.00,
+        currentPrice: 25.00,
         currentImg: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80'
     },
 
@@ -1079,7 +1079,7 @@ const calzoneAmigustoApp = {
         limit: 6,
         selected: [],
         name: 'Calzone A Mi Gusto',
-        price: 31.00,
+        price: 32.00,
         img: 'IM/CAL.jpg'
     },
 
@@ -1980,8 +1980,15 @@ function selectPizzaSize(btn, pizzaIdx) {
     if (addBtn) {
         if (pizzaIdx === '4') {
             const isPersonal = btn.innerText.includes('PERSONAL');
-            if (typeof vegApp !== 'undefined') {
-                vegApp.updateLimit(isPersonal ? 4 : 6, btn);
+            const limit = isPersonal ? 4 : 6;
+            const name = btn.getAttribute('data-name');
+            const price = parseFloat(btn.getAttribute('data-price'));
+            const img = btn.getAttribute('data-img');
+            if (typeof pizzaAmigustoApp !== 'undefined') {
+                pizzaAmigustoApp.updateSizeLimit(limit, name, price, img);
+                addBtn.setAttribute("onclick", `pizzaAmigustoApp.addToCart(this)`);
+            } else if (typeof vegApp !== 'undefined') {
+                vegApp.updateLimit(limit, btn);
                 addBtn.setAttribute("onclick", `vegApp.addToCart('${pizzaIdx}', this)`);
             }
         } else if (pizzaIdx === '27') {
@@ -2159,7 +2166,7 @@ function addCalzoneVegToCart(btn) {
 
     const oliveType = selectedOlive.getAttribute('data-type');
     const name = `Calzone Vegetariano (Aceitunas ${oliveType})`;
-    const price = 26.90;
+    const price = 31.00;
     const img = 'IM/CAL.jpg';
 
     cartApp.addItem(name, price, img, '', btn);
@@ -2192,7 +2199,7 @@ function confirmRavioles(btn) {
 
     const sauceName = selectedSauce.value;
     const name = `Ravioles (Salsa ${sauceName})`;
-    const price = 24.00;
+    const price = 27.00;
     const img = 'IM/PASTAS/RAVIOLES.png'; // Assuming pasta.png as it was used before in menu.html
     const category = 'Pasta';
 
@@ -2223,7 +2230,7 @@ function confirmFetuccini(btn) {
 
     const sauceName = selectedSauce.value;
     const name = `Fetuccini (Salsa ${sauceName})`;
-    const price = 23.00;
+    const price = 26.00;
     const img = 'IM/pasta.png';
     const category = 'Pasta';
 
@@ -2253,7 +2260,7 @@ function confirmEspaguetis(btn) {
 
     const sauceName = selectedSauce.value;
     const name = `Espaguetis (Salsa ${sauceName})`;
-    const price = 22.00;
+    const price = 25.00;
     const img = 'IM/pasta.png';
     const category = 'Pasta';
 
